@@ -121,18 +121,3 @@ if [[ $WAVFILE2 != "" ]] && [[ $TWOVALIDMIX == "True" ]]; then
   
 fi
 exit
-
-
-
-
-exit
-"[0:a]channelsplit=channel_layout=5.1; \
-[1:a]channelsplit=channel_layout=stereo" -c:a pcm_s24le output.mov
-
-# "[0:a]channelsplit=channel_layout=5.1; \
-# [1:a]channelsplit=channel_layout=stereo" -c:a pcm_s24le output.mov
-
-
-
-exit
-

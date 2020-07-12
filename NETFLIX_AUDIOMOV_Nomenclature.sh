@@ -15,6 +15,10 @@ ISSUE: $ISSUE
 "
 exit
 }
+
+# --- Filenaming (based on Netflix spec in regards of secondary audio dubbed masters -----
+
+
 # set args 1 & 2:
 WAVFILE1=$1
 WAVFILE2=$2
@@ -28,11 +32,12 @@ WAV1_EXT=$(echo "$WAVFILE1" | sed "s/.*\/.*\.\([a-zA-Z]*\)$/\1/")
 [ -f $WAVFILE1 ] && echo || usage "The file $WAVFILE1 doesn't seem to exist"
 
 
+
 # path windows compatible (part is to be removed if using FFMPEG mac or linux binaries)
-WAVFILE1_DISKNAME=$(echo "$WAVFILE1" | sed "s/\/cygdrive\/\([a-z]\)\/.*/\1/" | tr "[:lower:]" "[:upper:]")
-WAVFILE1_DISKNAME="$WAVFILE1_DISKNAME"":"
-WAVFILE1_WINPATH=$(echo "$WAVFILE1" | sed "s/\/cygdrive\/[a-z]/$WAVFILE1_DISKNAME/" )
-echo "Winpath syntax of the first arg file access path is: $WAVFILE1_WINPATH"
+  WAVFILE1_DISKNAME=$(echo "$WAVFILE1" | sed "s/\/cygdrive\/\([a-z]\)\/.*/\1/" | tr "[:lower:]" "[:upper:]")
+  WAVFILE1_DISKNAME="$WAVFILE1_DISKNAME"":"
+  WAVFILE1_WINPATH=$(echo "$WAVFILE1" | sed "s/\/cygdrive\/[a-z]/$WAVFILE1_DISKNAME/" )
+  echo "Winpath syntax of the first arg file access path is: $WAVFILE1_WINPATH"
   
 # the wav file needs to contain a 5.1 audio stream or a stereo audio stream. PCM
 # detect number of stream (it should be one as only the first audio stream will be used
@@ -120,18 +125,3 @@ if [[ $WAVFILE2 != "" ]] && [[ $TWOVALIDMIX == "True" ]]; then
   
 fi
 exit
-
-
-
-
-exit
-"[0:a]channelsplit=channel_layout=5.1; \
-[1:a]channelsplit=channel_layout=stereo" -c:a pcm_s24le output.mov
-
-# "[0:a]channelsplit=channel_layout=5.1; \
-# [1:a]channelsplit=channel_layout=stereo" -c:a pcm_s24le output.mov
-
-
-
-exit
-
