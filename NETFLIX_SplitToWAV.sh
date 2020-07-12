@@ -40,11 +40,11 @@ echo "number of streams: $MOVFILE_NbSTREAMS"
 [ $MOVFILE_NbSTREAMS -lt 1 ] && usage "movie: $MOVFILE. No audio stream detected in the asset. At least one audio streams needs to be embedded among the .mov(.MOV) files" 
 
 # ------ FFMPEG process ------
-# split all audio streams as multiple outpot interlaced .wav files(codec: pcm_s24le)
+# split all audio streams as multiple output interlaced .wav files(codec: pcm_s24le)
 for ch in $(seq 1 1 $MOVFILE_NbSTREAMS)
  do 
  ((index=ch-1))
- echo $index
+ # ffmpeg output specific audio stream as .wav audio file
  ffmpeg -i "$MOVFILE_WINPATH" -map 0:a:$index -c:a pcm_s24le "$MOVFILE_WINPATH"_stream$ch.wav
 done
 
